@@ -17,13 +17,33 @@
             callback: function (t) {
               return t.card('idList', 'name').then(card => {
 
+                // card id we want to move 
                 console.log(`${card.idList} : ${card.name}`);
 
+                // get all available lists on the board
+                fetch('https://api.trello.com/1/boards/{id}/lists?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C', {
+                  method: 'GET',
+                  headers: {
+                    'Accept': 'application/json'
+                  }
+                })
+                  .then(response => {
+                    console.log(
+                      `Response: ${response.status} ${response.statusText}`
+                    );
+                    return response.text();
+                  })
+                  .then(text => console.log(text))
+                  .catch(err => console.error(err));
+
+                // move the card
                 return fetch(`https://api.trello.com/1/lists/${card.idList}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C`, {
                   method: 'GET'
                 })
                   .then(response => {
-                    console.log(response);
+                    console.log(
+                      `Response: ${response.status} ${response.statusText}`
+                    );
                     return response.text();
                   })
                   .then(text => console.log(text))
