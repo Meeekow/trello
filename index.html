@@ -16,7 +16,9 @@
             text: "Move to Done",
             callback: function (t) {
               // return t.card('id', 'name').then(card => alert(`Hello from ${card.name} (id: ${card.id})!`))
-              console.log(`${card.id}, ${card.name}, ${card.idList}`);
+              return t.card('id', 'name', 'idList').then((card) => {
+                console.log(`${card.id}, ${card.name}, ${card.idList}`);
+              })
             }
           }
         ]
