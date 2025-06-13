@@ -17,7 +17,23 @@
             callback: function (t) {
               // return t.card('id', 'name').then(card => alert(`Hello from ${card.name} (id: ${card.id})!`))
               return t.card('id', 'name', 'idList').then((card) => {
-                console.log(`${card.id}, ${card.name}, ${card.idList}`);
+                // console.log(`${card}\n${card.id}, ${card.name}, ${card.idList}`);
+
+                // This code sample uses the 'node-fetch' library:
+                // https://www.npmjs.com/package/node-fetch
+                const fetch = require('node-fetch');
+
+                fetch('https://api.trello.com/1/lists/{id}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C', {
+                  method: 'GET'
+                })
+                  .then(response => {
+                    console.log(
+                      `Response: ${response} ${response.status} ${response.statusText}`
+                    );
+                    return response.text();
+                  })
+                  .then(text => console.log(text))
+                  .catch(err => console.error(err));
               })
             }
           }
