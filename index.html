@@ -22,9 +22,12 @@
 
                 // move the card
                 return fetch(`https://api.trello.com/1/lists/${card.idList}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C`, {
-                  method: 'GET'
-                }, {
-                  idBoard: '67ffff7e71c0c2d325877c4d',
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  }, {
+                    idBoard: '67ffff7e71c0c2d325877c4d'
+                  }
                 })
                   .then(response => {
                     console.log(
