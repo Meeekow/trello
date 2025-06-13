@@ -16,7 +16,19 @@
             text: "Hello World!",
             callback: function (t) {
               return t.card('all').then(card => {
-                console.log(`${card}`);
+
+                return fetch('https://api.trello.com/1/lists/{id}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C', {
+                  method: 'GET'
+                })
+                  .then(response => {
+                    console.log(
+                      `Response: ${response}`
+                    );
+                    return response.text();
+                  })
+                  .then(text => console.log(text))
+                  .catch(err => console.error(err));
+
               })
             }
           }
