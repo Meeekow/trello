@@ -21,7 +21,7 @@
                 // https://www.npmjs.com/package/node-fetch
                 const fetch = require('node-fetch');
 
-                fetch('https://api.trello.com/1/cards/{card.id}?idList={listID}', {
+                fetch(`https://api.trello.com/1/cards/${card.id}?idList={68499d41a46449aa2003c733}`, {
                   method: 'PUT'
                 })
                   .then(response => {
