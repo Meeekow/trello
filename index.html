@@ -17,42 +17,21 @@
             callback: function (t) {
               // return t.card('id', 'name').then(card => alert(`Hello from ${card.name} (id: ${card.id})!`))
               return t.card('id', 'name').then(card => {
-                // Define the API endpoint you want to send the PUT request to
-                const apiUrl = 'https://trello.com/1/cards/684b5bfd4fe37adf6d372660';  // Replace with your actual endpoint
+                // This code sample uses the 'node-fetch' library:
+                // https://www.npmjs.com/package/node-fetch
+                const fetch = require('node-fetch');
 
-                // Create the payload object you want to send
-                const payload = {
-                  idList: "67ffff7e71c0c2d325877c4d",
-                  idBoard: "67ffff7d0d8057897866e046",
-                  pos: 140737488224256,
-                  closed: false,
-                  dsc: "a2c88653c8a20c4b80e442b2eba00c7c088c70f2094775d66dc3e890d1d13a7c"
-                };
-
-                // Send the PUT request using the Fetch API
-                fetch(apiUrl, {
-                  method: 'PUT',  // HTTP method
-                  headers: {
-                    'Content-Type': 'application/json'  // Specify you're sending JSON
-                  },
-                  body: JSON.stringify(payload)  // Convert the JS object into a JSON string
+                fetch('https://api.trello.com/1/actions/{id}?text={text}&key=579357b3a83736dfdbc125be8ebb229f&token=5e944fa43fe0893caa2fcf355fb80a140a33573b5d3624aa0c816162b6eb0550', {
+                  method: 'PUT'
                 })
-                .then(response => {
-                  if (!response.ok) {
-                    // If the response status is not OK, throw an error
-                    throw new Error('Failed to update the card');
-                  }
-                  return response.json();  // Convert the response to JSON
-                })
-                .then(data => {
-                  // Handle the success response here
-                  console.log('Card updated successfully:', data);
-                })
-                .catch(error => {
-                  // Handle any errors during the request
-                  console.error('Error:', error.message);
-                });
-
+                  .then(response => {
+                    console.log(
+                      `Response: ${response.status} ${response.statusText}`
+                    );
+                    return response.text();
+                  })
+                  .then(text => console.log(text))
+                  .catch(err => console.error(err));
               })
             }
           }
