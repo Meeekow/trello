@@ -15,15 +15,15 @@
             icon: "https://i.ibb.co/6sbknH0/logo-stroke-32pt-style-2-no-stroke.png",
             text: "Hello World!",
             callback: function (t) {
-              return t.card('all').then(card => {
+              return t.card('idList', 'name').then(card => {
+
+                console.log(`${card.idList} : ${card.name}`);
 
                 return fetch('https://api.trello.com/1/lists/{id}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C', {
                   method: 'GET'
                 })
                   .then(response => {
-                    console.log(
-                      `Response: ${response}`
-                    );
+                    console.log(response);
                     return response.text();
                   })
                   .then(text => console.log(text))
