@@ -8,55 +8,42 @@
 <body>
   <script src="https://p.trellocdn.com/power-up.min.js"></script>
   <script>
-    const url = "https://api.trello.com/1/actions/{id}?text={text}&key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C"
+    TrelloPowerUp.initialize({
+      'card-buttons': function (t, options) {
+        return [
+          {
+            icon: "https://i.ibb.co/6sbknH0/logo-stroke-32pt-style-2-no-stroke.png",
+            text: "Hello World!",
+            callback: function (t) {
+              return t.card('idList', 'name').then(card => {
 
-    fetch(url, {
-      method: "PUT"
+                // card id we want to move 
+                console.log(`${card.idList} : ${card.name}`);
+
+                const doneListId = {
+                  idBoard: '67ffff7e71c0c2d325877c4d'
+                }
+
+                // move the card
+                return fetch(`https://api.trello.com/1/lists/${card.idList}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C`, {
+                  method: 'PUT',
+                  body: JSON.stringify(doneListId)
+                })
+                  .then(response => {
+                    console.log(
+                      `Response: ${response.status} ${response.statusText}`
+                    );
+                    return response.text();
+                  })
+                  .then(text => console.log(text))
+                  .catch(err => console.error(err));
+
+              })
+            }
+          }
+        ]
+      }
     })
-    .then(response => {
-      console.log(`Response: ${response.status}`);
-      return response.text();
-    })
-    .then(text => console.log(text))
-    .catch(err => console.error(err))
-
-    // TrelloPowerUp.initialize({
-    //   'card-buttons': function (t, options) {
-    //     return [
-    //       {
-    //         icon: "https://i.ibb.co/6sbknH0/logo-stroke-32pt-style-2-no-stroke.png",
-    //         text: "Hello World!",
-    //         callback: function (t) {
-    //           return t.card('idList', 'name').then(card => {
-
-    //             // card id we want to move 
-    //             console.log(`${card.idList} : ${card.name}`);
-
-    //             const doneListId = {
-    //               idBoard: '67ffff7e71c0c2d325877c4d'
-    //             }
-
-    //             // move the card
-    //             return fetch(`https://api.trello.com/1/lists/${card.idList}?key=579357b3a83736dfdbc125be8ebb229f&token=ATTAa924f6c46b631cf9c19c4bceef50626d57133154947a16cccfa950cbd70bf4c6967C9B7C`, {
-    //               method: 'GET',
-    //               headers: {'Content-Type': 'application/json'},
-    //               body: JSON.stringify(doneListId)
-    //             })
-    //               .then(response => {
-    //                 console.log(
-    //                   `Response: ${response.status} ${response.statusText}`
-    //                 );
-    //                 return response.text();
-    //               })
-    //               .then(text => console.log(text))
-    //               .catch(err => console.error(err));
-
-    //           })
-    //         }
-    //       }
-    //     ]
-    //   }
-    // })
   </script>
 </body>
 </html>
